@@ -4,10 +4,7 @@ const  io = socketio();
 const  socketApi = { };
 
 socketApi.io = io;
-
 const users = { };
-
-
 
 io.on('connection',(socket) =>{
     console.log('a user connected');
@@ -24,6 +21,7 @@ io.on('connection',(socket) =>{
         users[socket.id] =userData;
 
         socket.broadcast.emit('newUser',users[socket.id]);
+        socket.emit('initPlayers',users)
     });
 
     socket.on('disconnect',() =>{

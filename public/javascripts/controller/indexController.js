@@ -2,6 +2,7 @@ app.controller('indexController',['$scope' ,'indexFactory',($scope,indexFactory)
 
 
     $scope.messages =[];
+    $scope.players = {};
 
 
     $scope.init =() =>{
@@ -24,6 +25,15 @@ app.controller('indexController',['$scope' ,'indexFactory',($scope,indexFactory)
         indexFactory.connectSocket('http://localhost:3000', connectionOptions)
             .then((socket)=>{
                 socket.emit('newUser',{username});
+                socket.on('initPlayers',(players) =>{
+                    $scope.players = players;
+                    $scope.$apply();
+                    console.log($scope.players);
+
+                });
+
+
+
                 socket.on('newUser',(data) =>{
                     const messageData ={
                         type: {
@@ -37,6 +47,9 @@ app.controller('indexController',['$scope' ,'indexFactory',($scope,indexFactory)
 
 
                 });
+
+
+
 
                 socket.on('disUser',(data) =>{
                     const messageData ={
