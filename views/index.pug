@@ -2,7 +2,7 @@ extends layout
 
 block content
 
-  div(ng-controller="indexController" ,ng-init="init()")
+  div(ng-controller="indexController",ng-init="init()")
     .ui.one.column.stackable.center.aligned.page.grid.margin-30
       .column.twelve.wide
         .ui.stacked.segment.gameArea
@@ -19,26 +19,13 @@ block content
               span.name SAMET
               .message this is awesome
         .ui.items.chat
-          .item
-            .content
-              a.header.name CAGRI
+          .item(ng-repeat="message in messages")
+            .content(ng-if="!message.type")
+              span [SERVER] &nbsp;
+              a.header.name {{message.username}} &nbsp;
               .description.message
-                | Selam
-          .item
-            .content
-              a.header.name TUNAY
-              .description.message
-                | selam nasılsın :)
-          .item
-            .content
-              a.header.name TUNAY
-              .description.message
-                | this is awesome
-          .item
-            .content
-              a.header.name SAMET
-              .description.message
-                | hey
+                | KATILDI
+
         .ui.action.input.fluid
           input(type='text', placeholder='Type here...')
           button.ui.button Send

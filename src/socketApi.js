@@ -22,6 +22,8 @@ io.on('connection',(socket) =>{
         };
         const userData = Object.assign(data,defaultData);
         users.push(userData);
+
+        socket.broadcast.emit('newUser',userData);
     });
 });
 
