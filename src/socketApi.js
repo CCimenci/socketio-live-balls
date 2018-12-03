@@ -29,25 +29,28 @@ io.on('connection',(socket) =>{
         socket.emit('initPlayers',users)
     });
 
-
-
-
     socket.on('disconnect',() =>{
         socket.broadcast.emit('disUser',users[socket.id]);
         delete users[socket.id];
     });
 
     socket.on('animate',(data) =>{
-        users[socket.id].position.x = data.x;
+        try {
 
 
-        users[socket.id].position.y = data.y;
+            users[socket.id].position.x = data.x;
 
-        socket.broadcast.emit('animate',{
-            socketId: socket.id ,
-            x:data.x,
-            y:data.y
-        });
+
+            users[socket.id].position.y = data.y;
+
+            socket.broadcast.emit('animate', {
+                socketId: socket.id,
+                x: data.x,
+                y: data.y
+            });
+        }catch (e) {
+            console.log(e);
+        }
     });
 
     socket.on('newMessage',data =>{
