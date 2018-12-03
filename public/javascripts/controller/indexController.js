@@ -1,4 +1,4 @@
-app.controller('indexController',['$scope' ,'indexFactory',($scope,indexFactory) =>{
+app.controller('indexController',['$scope' ,'indexFactory', 'configFactory',($scope,indexFactory,configFactory) =>{
 
 
     $scope.messages =[];
@@ -39,9 +39,9 @@ function showBubble(id,message) {
             }
 
             try {
+            const socketUrl = await configFactory.getConfig();
 
-
-                const socket = await indexFactory.connectSocket('http://localhost:3000', connectionOptions);
+                const socket = await indexFactory.connectSocket(socketUrl.data.socketUrl, connectionOptions);
                 socket.emit('newUser', {username});
                 socket.on('initPlayers', (players) => {
                     $scope.players = players;
